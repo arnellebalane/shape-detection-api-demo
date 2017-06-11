@@ -15,14 +15,16 @@ const context = canvas.getContext('2d');
 
     let renderLocked = false;
     const faceDetector = new FaceDetector({ fastMode: true });
+    const textDetector = new TextDetector();
 
     function render() {
         if (!video.paused) {
             renderLocked = true;
 
             Promise.all([
-                faceDetector.detect(video)
-            ]).then(([detectedFaces]) => {
+                faceDetector.detect(video).catch(() => console.log('Face Detection not available.')),
+                textDetector.detect(video).catch(() => console.log('Text Detection not available.'))
+            ]).then(([detectedFaces = [], detectedTexts = []]) => {
                 context.clearRect(0, 0, canvas.width, canvas.height);
                 context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
 
@@ -38,12 +40,26 @@ const context = canvas.getContext('2d');
                     context.stroke();
                     context.fillText('face detected', left + 5, top - 8);
 
-                    detectedFace.landmarks.forEach((landmark) => {
-                        context.beginPath();
-                        context.arc(landmark.location.x, landmark.location.y, 5, 0, Math.PI * 2);
-                        context.fill();
-                        context.fillText(landmark.type, landmark.location.x + 10, landmark.location.y + 4);
-                    });
+                    if (detectedFace.landmarks) {
+                        detectedFace.landmarks.forEach((landmark) => {
+                            context.beginPath();
+                            context.arc(landmark.location.x, landmark.location.y, 5, 0, Math.PI * 2);
+                            context.fill();
+                            context.fillText(landmark.type, landmark.location.x + 10, landmark.location.y + 4);
+                        });
+                    }
+                });
+
+                context.strokeStyle = '#f44336';
+                context.fillStyle = '#f44336';
+                context.font = '24px Mononoki';
+
+                detectedTexts.forEach((detectedText) => {
+                    const { top, left, width, height } = detectedText.boundingBox;
+                    context.beginPath();
+                    context.rect(left, top, width, height);
+                    context.stroke();
+                    context.fillText(detectedText.rawValue, left + 5, top - 12);
                 });
 
                 renderLocked = false;
