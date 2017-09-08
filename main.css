@@ -10,9 +10,56 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    color: #fff;
     background-color: #111;
+}
+
+a {
+    font: inherit;
+    color: inherit;
 }
 
 canvas {
     display: block;
+}
+
+.links {
+    display: flex;
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+}
+
+.links a {
+    display: block;
+    padding: 0 1em;
+    border-radius: 3px;
+    font-size: 12px;
+    line-height: 30px;
+    text-transform: uppercase;
+    text-decoration: none;
+    opacity: 0.5;
+    transition: opacity 300ms ease;
+}
+
+.links a:hover,
+.links a:focus {
+    opacity: 1;
+}
+
+.links .blogpost {
+    padding-left: 26px;
+    margin-right: 5px;
+    background: rgba(255, 255, 255, 0.25) url("images/external.png") 0.5em center no-repeat;
+    background-size: auto 50%;
+}
+
+.links .github {
+    width: 30px;
+    height: 30px;
+    font-size: 0;
+    background: rgba(255, 255, 255, 0.25) url("images/github.png") center center no-repeat;
+    background-size: auto 50%;
 }
