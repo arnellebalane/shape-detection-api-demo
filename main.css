@@ -65,7 +65,7 @@ canvas {
 .links .blogpost {
     padding-left: 26px;
     margin-right: 5px;
-    background: rgba(255, 255, 255, 0.25) url("images/external.png") 0.5em center no-repeat;
+    background: #333 url("images/external.png") 0.5em center no-repeat;
     background-size: auto 50%;
 }
 
@@ -73,6 +73,6 @@ canvas {
     width: 30px;
     height: 30px;
     font-size: 0;
-    background: rgba(255, 255, 255, 0.25) url("images/github.png") center center no-repeat;
+    background: #333 url("images/github.png") center center no-repeat;
     background-size: auto 50%;
 }
