@@ -1,7 +1,17 @@
 const canvas = document.querySelector('canvas');
 const context = canvas.getContext('2d');
 
-(async () => {
+if (isShapeDetectionApiSupported()) {
+    runShapeDetectionApiDemo();
+} else {
+    displayFallbackMessage();
+}
+
+function isShapeDetectionApiSupported() {
+    return window.FaceDetector && window.TextDetector && window.BarcodeDetector;
+}
+
+async function runShapeDetectionApiDemo() {
     const constraints = { video: { facingMode: 'environment' } };
     const mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
 
@@ -85,7 +95,6 @@ const context = canvas.getContext('2d');
                     }
                     context.stroke();
                     context.fillText(detectedBarcode.rawValue, left, top + height + 16);
-                    console.log(detectedBarcode.cornerPoints);
                 });
 
                 renderLocked = false;
@@ -99,4 +108,10 @@ const context = canvas.getContext('2d');
             render();
         }
     })();
-})();
+};
+
+function displayFallbackMessage() {
+    document.querySelector('.fallback-message').classList.remove('hidden');
+    document.querySelector('canvas').classList.add('hidden');
+    document.querySelector('.links').classList.add('hidden');
+}
