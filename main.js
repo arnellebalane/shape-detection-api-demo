@@ -55,9 +55,9 @@ async function runShapeDetectionApiDemo() {
                     if (detectedFace.landmarks) {
                         detectedFace.landmarks.forEach((landmark) => {
                             context.beginPath();
-                            context.arc(landmark.location.x, landmark.location.y, 5, 0, Math.PI * 2);
+                            context.arc(landmark.locations.x, landmark.locations.y, 5, 0, Math.PI * 2);
                             context.fill();
-                            context.fillText(landmark.type, landmark.location.x + 10, landmark.location.y + 4);
+                            context.fillText(landmark.type, landmark.locations.x + 10, landmark.locations.y + 4);
                         });
                     }
                 });
